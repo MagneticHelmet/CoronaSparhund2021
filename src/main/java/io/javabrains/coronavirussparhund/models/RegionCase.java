@@ -1,5 +1,4 @@
 package io.javabrains.coronavirussparhund.models;
-
 import java.text.DecimalFormat;
 import java.util.Comparator;
 

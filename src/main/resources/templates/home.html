@@ -11,22 +11,7 @@
 
 <body>
 <h1>Corona Spårhund</h1>
-<p>Hemsidan spårar förändringen av bekräftadefall från föregående vecka</p>
-<!--<div class="jumbotron">
-    <h1 class="display-4"th:text="${totalThisWeek}"></h1>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <h2 class="display-4"th:text="${totalLastWeek}"></h2>
-    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
-    <hr class="my-4">
- <div class="container" , style = "float: left">
-    <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
-    <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
-    </p>
-</div>-->
-
-    <!--<p th:text="${testName}"></p>-->
-
+<p>Hemsidan spårar förändringen av bekräftadefall från föregående vecka, så när som på procenten.</p>
 <div class="jumbotron jumbotron-fluid" style="background-color:#fcd4e5">
     <div class="container">
         <h1 class="display-4"th:text="${totalThisWeek}"></h1>
@@ -34,30 +19,36 @@
     </div>
 </div>
 
-<div class="table-responsive col-sm-10">
+<div class="table-responsive col-sm-8">
 <table class = "table">
     <thead>
     <tr>
-        <th>Län(Ökande fall)</th>
+        <th>
+            <p th:if="${firstList[0].diffFactor} >= 0" th:text = "'Län(Ökande)'"></p>
+            <p th:unless="${firstList[0].diffFactor}  >= 0" th:text = "'Län(Avtagande)'"></p>
+        </th>
         <th>Förra Veckan</th>
         <th>Denna Vecka</th>
         <th colspan="2">Diff</th>
-        <th>Län(Avtagande fall)</th>
+        <th>
+            <p th:if="${secondList[0].diffFactor} >= 0" th:text = "'Län(Ökande)'"></p>
+            <p th:unless="${secondList[0].diffFactor}  >= 0" th:text = "'Län(Avtagande)'"></p>
+        </th>
         <th>Förra Veckan</th>
         <th>Denna Vecka</th>
         <th>Diff</th>
     </tr>
     </thead>
-    <tr th:each="posRegionCase, iter: ${firstList}">
+    <tr th:each="RegionCase, iter: ${firstList}">
         <td th:text="${firstList[iter.index].region}"></td>
-        <td th:text="${posRegionCase.casesLastWeek}">0</td>
-        <td th:text="${posRegionCase.casesThisWeek}">0</td>
-        <td style="background-color:Crimson;" th:text="${posRegionCase.diffPercentage} + '%'" ></td>
+        <td th:text="${RegionCase.casesLastWeek}">0</td>
+        <td th:text="${RegionCase.casesThisWeek}">0</td>
+        <td th:text="${RegionCase.diffPercentage} + '%'" style="background-color:#feffe6"></td>
 
         <td th:if="${iter.index} < ${secondListLength}", colspan="2" th:text="${secondList[iter.index].region}"></td>
         <td th:if="${iter.index} < ${secondListLength}" th:text="${secondList[iter.index].casesLastWeek}">0</td>
         <td th:if="${iter.index} < ${secondListLength}" th:text="${secondList[iter.index].casesThisWeek}">0</td>
-        <td th:if="${iter.index} < ${secondListLength}", style="background-color:#87ddff;" th:text="${secondList[iter.index].diffPercentage}+'%'" ></td>
+        <td th:if="${iter.index} < ${secondListLength}" th:text="${secondList[iter.index].diffPercentage}+'%'" style="background-color:#feffe6"></td>
 
     </tr>
 
