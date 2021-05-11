@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ResourceLoader;
 import org.springframework.stereotype.Service;
 import java.io.InputStream;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -20,9 +21,9 @@ public class CoronaDataService {
         List<RegionCase> posDiffCases = new ArrayList<RegionCase>();
         List<RegionCase> negDiffCases = new ArrayList<RegionCase>();
         try {
-            InputStream inputStream = resourceLoader.getResource("classpath:Folkhalsomyndigheten_Covid19.xlsx").getInputStream();
-            //inputStream = new FileInputStream(excelFilePath);
-            XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+            URL url = new URL("https://fohm.maps.arcgis.com/sharing/rest/content/items/b5e7488e117749c19881cce45db13f7e/data");
+            InputStream stream = url.openStream();
+            XSSFWorkbook workbook = new XSSFWorkbook(stream);
             XSSFSheet worksheet = workbook.getSheetAt(6); // getting the  7nth worksheet from the the Excel file.
             String compareString = ""; // will be used to compare Lan (column 2) in the Excel page, When a change is happening we are at the row of the most recent reported cases.
 
